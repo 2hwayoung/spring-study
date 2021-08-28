@@ -23,6 +23,7 @@ class MemberServiceTest {
     public void afterEach() {
         memberRepository.clearStore();
     }
+
     @Test
     void join() { //회원가입
         //given
