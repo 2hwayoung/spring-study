@@ -1,11 +1,11 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,19 +28,21 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    private LocalDateTime orderDate; // 주문 시각
+    private LocalDateTime orderDate; //주문시간
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; // 주문상태 [ORDER, CANCEL]
+    private OrderStatus status; //주문상태 [ORDER, CANCEL]
 
-    //==연관관계 메서드--//
+    //==연관관계 메서드==//
     public void setMember(Member member) {
         this.member = member;
         member.getOrders().add(this);
@@ -95,4 +97,5 @@ public class Order {
         }
         return totalPrice;
     }
+
 }

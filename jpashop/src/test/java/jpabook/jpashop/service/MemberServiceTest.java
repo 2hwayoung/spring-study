@@ -29,10 +29,10 @@ public class MemberServiceTest {
         member.setName("kim");
 
         //when
-        Long saveId = memberService.join(member);
+        Long savedId = memberService.join(member);
 
         //then
-        assertEquals(member, memberRepository.findOne(saveId));
+        assertEquals(member, memberRepository.findOne(savedId));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -46,10 +46,9 @@ public class MemberServiceTest {
 
         //when
         memberService.join(member1);
-        memberService.join(member2); // 예외가 발생해야 한다.
+        memberService.join(member2); //예외가 발생해야 한다!!!
 
         //then
         fail("예외가 발생해야 한다.");
-
     }
 }
